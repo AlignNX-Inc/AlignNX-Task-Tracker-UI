@@ -1,0 +1,19 @@
+.task-list-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: opacity 0.4s ease, border-color 0.3s;
+    margin-bottom: 16px;
+}
+
+.task-list {
+    padding: 8px 20px 16px;
+}
+
+.empty {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 12px 0;
+    font-style: italic;
+}

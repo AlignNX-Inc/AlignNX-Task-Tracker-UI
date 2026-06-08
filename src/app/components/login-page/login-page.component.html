@@ -1,0 +1,8 @@
+
+
+<div class="login-page-container">
+  <p style="color:black">{{ message() }} </p>
+  <input [(ngModel)]="username" placeholder="Username" (keyup.enter)="check_credentials()" />
+  <input [(ngModel)]="password" placeholder="Password" (keyup.enter)="check_credentials()" type="password" />
+  <button (click)="check_credentials()">Sign In</button>
+</div>

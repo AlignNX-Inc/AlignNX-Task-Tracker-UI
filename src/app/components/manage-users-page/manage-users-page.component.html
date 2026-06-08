@@ -1,0 +1,8 @@
+
+<div class="login-page-container">
+  <p style="color:black">{{ message() }} </p>
+  <button (click)="get_users()">Refresh Users</button>
+  @for (user of this.users(); track user.id) {
+    <app-user-info-item [user]="user"/>
+  }
+</div>

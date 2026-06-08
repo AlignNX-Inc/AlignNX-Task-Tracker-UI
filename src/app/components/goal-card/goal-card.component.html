@@ -1,0 +1,48 @@
+<div class="goal-card" [class.complete]="isComplete">
+      <!-- Header -->
+      <div class="goal-header" (click)="toggleExpanded.emit()">
+        <div class="goal-left">
+          <span class="chevron" [class.open]="goal.expanded">›</span>
+          <span class="goal-title">{{ goal.title }}</span>
+          <span class="task-count">{{ goal.tasks.length }} tasks</span>
+        </div>
+        <span class="progress-label">{{ progress }}%</span>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="progress"></div>
+      </div>
+
+      <!-- Task List -->
+      @if (goal.expanded) {
+        <div class="task-list">
+          @for (task of goal.tasks; track task.id) {
+            <app-task-item [task]="task" (toggle)="toggleTask.emit($event)" />
+          }
+          @if (goal.tasks.length === 0) {
+            <p class="empty">No tasks yet.</p>
+          }
+
+          <!-- Add Task Form -->
+          @if (showAddTask()) {
+            <div class="add-task-form">
+              <input class="add-task-form-input" [(ngModel)]="newTaskTitle" placeholder="Task description…" (keyup.enter)="submitTask()" />
+              <input class="add-task-form-input" [(ngModel)]="newTaskAssignee" placeholder="Assigned to…" (keyup.enter)="submitTask()" />
+              @if (invalidDateEntered()) {
+                <input class="date-format-err-input" [(ngModel)]="newTaskCompleteBy" placeholder="Complete by…" (keyup.enter)="submitTask()" />
+                <p class="date-format-err-p">Please enter a date with the format MM/DD or MM/DD/YYYY.</p>
+              } @else {
+                <input class="add-task-form-input" [(ngModel)]="newTaskCompleteBy" placeholder="Complete by…" (keyup.enter)="submitTask()" />
+              }
+              <div class="form-actions">
+                <button class="btn-primary" (click)="submitTask()">Add</button>
+                <button class="btn-ghost" (click)="showAddTask.set(false)">Cancel</button>
+              </div>
+            </div>
+          } @else {
+            <button class="add-task-btn" (click)="showAddTask.set(true)">+ Add Task</button>
+          }
+        </div>
+      }
+    </div>

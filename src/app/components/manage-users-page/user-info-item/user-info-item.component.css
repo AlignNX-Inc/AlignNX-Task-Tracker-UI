@@ -1,0 +1,25 @@
+.user-row {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    gap: 12px;
+    padding: 10px 10px;
+    transition: opacity 0.3s ease;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.user-row:last-child { border-bottom: none; }
+
+
+
+.data-field {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface);
+    padding: 6px 8px;
+    border-radius: 20px;
+    font-family: var(--font-body);
+    white-space: nowrap;
+}
