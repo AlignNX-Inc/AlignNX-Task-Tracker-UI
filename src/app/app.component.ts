@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { ManageUsersPageComponent } from './components/manage-users-page/manage-
   standalone: true,
   imports: [FormsModule, HttpClientModule, GoalCardComponent, ErrorDisplayComponent, TaskListComponent, LoginPageComponent, ManageUsersPageComponent],
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {

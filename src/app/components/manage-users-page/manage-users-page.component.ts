@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { TaskService } from '../../services/task.service';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { UserInfoItemComponent } from './user-info-item/user-info-item.component
   selector: 'app-manage-users-page',
   templateUrl: './manage-users-page.component.html',
   imports: [FormsModule, UserInfoItemComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./manage-users-page.component.css']
 })
 export class ManageUsersPageComponent  {

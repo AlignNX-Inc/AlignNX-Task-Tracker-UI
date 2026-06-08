@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, signal, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 
 import { Task } from '../../models/task.model';
@@ -13,6 +13,7 @@ interface TaskInfo {
   standalone: true,
   imports: [],
   templateUrl: './task-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./task-item.component.css'],
 })
 export class TaskItemComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { Goal } from '../../models/task.model';
@@ -9,6 +9,7 @@ import { TaskItemComponent } from '../task-item/task-item.component';
   standalone: true,
   imports: [FormsModule, TaskItemComponent],
   templateUrl: `./goal-card.component.html`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './goal-card.component.css',
 })
 export class GoalCardComponent {

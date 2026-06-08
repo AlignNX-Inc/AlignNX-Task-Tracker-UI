@@ -2,7 +2,14 @@
 <div class="task-list-card">
   <div class="task-list">
     @for (task of tasks; track task.id) {
-      <app-task-item [task]="task" (toggle)="toggleTask.emit($event)" />
+      @if (!task.completed) {
+        <app-task-item [task]="task" (toggle)="toggleTask.emit($event)" />
+      }
+    }
+    @for (task of tasks; track task.id) {
+      @if (task.completed) {
+        <app-task-item [task]="task" (toggle)="toggleTask.emit($event)" />
+      }
     }
     @if (tasks.length === 0) {
       <p class="empty">No tasks yet.</p>

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TaskItemComponent } from '../task-item/task-item.component';
 import { Goal, Task } from '../../models/task.model';
 
@@ -7,6 +7,7 @@ import { Goal, Task } from '../../models/task.model';
   standalone: true,
   imports: [TaskItemComponent],
   templateUrl: './task-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent  {

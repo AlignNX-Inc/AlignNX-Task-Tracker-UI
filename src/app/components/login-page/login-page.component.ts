@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { TaskService } from '../../services/task.service';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   imports: [FormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent  {
