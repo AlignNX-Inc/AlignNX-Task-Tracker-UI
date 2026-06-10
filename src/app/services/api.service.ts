@@ -49,4 +49,16 @@ export class ApiService {
   getUsers(): Observable<UserMeta[]> {
     return this.http.get<UserMeta[]>(`${API_BASE}/users`);
   }
+
+  updateUser(userId: string, username: string, password_hash: string, name: string, role: string): Observable<string> {
+    return this.http.patch<string>(`${API_BASE}/users`, {id: userId, username: username, password_hash: password_hash, name: name, role: role});
+  }
+
+  addUser(username: string, password_hash: string, name: string, role: string): Observable<string> {
+    return this.http.post<string>(`${API_BASE}/users`, {username: username, password_hash: password_hash, name: name, role: role})
+  }
+
+  deleteUser(userId: string): Observable<string> {
+    return this.http.delete<string>(`${API_BASE}/users/${userId}`)
+  }
 }

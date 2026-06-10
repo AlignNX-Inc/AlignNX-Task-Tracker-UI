@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.login-page-container p {
+  color: black;
+}
+
 .login-page-container input {
     padding: 8px 12px;
     margin-top: 5px;
@@ -24,7 +28,7 @@
 
 .login-page-container button {
     padding: 7px 16px;
-    margin-top: 5px;
+    margin-top: 10px;
     background: var(--accent);
     color: var(--bg);
     border: none;
@@ -36,4 +40,65 @@
     transition: opacity 0.2s;
 }
 
-.login-page-container button:hover { opacity: 0.85; }
+.login-page-container button:hover { opacity: 0.85; }.add-user-btn {
+    margin-top: 10px;
+    background: none;
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: border-color 0.2s, color 0.2s;
+    width: 100%;
+}
+
+
+.add-user-form {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    margin-top: 5px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: white;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.add-user-form-input {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.add-user-form-input:focus { border-color: var(--accent); }
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.password-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.password-info p {
+  color: #ff0000;
+  font-size: 12px;
+  max-width: 350px;
+}

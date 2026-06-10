@@ -1,0 +1,59 @@
+
+.mdc-dialog__surface {
+  border-radius: 12px !important;
+}
+
+.dialog-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  background: #ffffff;
+  border: 1px solid #c9e4f0;
+  overflow: hidden;
+  transition: opacity 0.4s ease, border-color 0.3s;
+  font-family: 'DM Mono', 'Fira Mono', monospace;
+}
+
+.dialog-card h2 {
+  color: #000000;
+  font-family: 'DM Mono', 'Fira Mono', monospace;
+  font-weight: 400;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.btn-cancel {
+    padding: 8px 16px;
+    background: #2596be;
+    font-family: 'DM Mono', 'Fira Mono', monospace;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-cancel:hover { background: #1a7a9e; }
+
+.btn-delete {
+    padding: 8px 16px;
+    margin-left: 5px;
+    font-family: 'DM Mono', 'Fira Mono', monospace;
+    background: #e30000;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-delete:hover { background: #c00000; }

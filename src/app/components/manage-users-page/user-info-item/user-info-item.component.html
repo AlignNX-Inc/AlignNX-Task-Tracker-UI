@@ -1,7 +1,24 @@
 
-<div class="user-row">
-    ID: <span class="data-field">{{ user.id }}</span>
-    Username: <span class="data-field">{{ user.username }}</span>
-    Name: <span class="data-field">{{ user.name }}</span>
-    Role: <span class="data-field">{{ user.role }}</span>
+<div class="user-row" [class.editing]="beingEdited()">
+  @if (beingEdited()) {
+    <div>
+      ID: <span class="data-field">{{ user.id }}</span>
+      Username: <input [(ngModel)]="updatedUsername" class="data-field-input" type="text"/>
+      Name: <input [(ngModel)]="updatedName" class="data-field-input" type="text"/>
+      Role: <input [(ngModel)]="updatedRole" class="data-field-input" type="text"/>
+    </div>
+    <div>
+      <button class="btn-edit" (click)="updateUser()">Save</button>
+      <button class="btn-delete" (click)="deleteUser()">Delete</button>
+    </div>
+  }
+  @else {
+    <div class="user-info">
+      ID: <span class="data-field">{{ user.id }}</span>
+      Username: <span class="data-field">{{ user.username }}</span>
+      Name: <span class="data-field">{{ user.name }}</span>
+      Role: <span class="data-field">{{ user.role }}</span>
+    </div>
+    <button class="btn-edit" (click)="beingEdited.set(true)">Edit</button>
+  }
 </div>

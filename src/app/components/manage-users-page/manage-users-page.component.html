@@ -1,8 +1,28 @@
 
 <div class="login-page-container">
-  <p style="color:black">{{ message() }} </p>
-  <button (click)="get_users()">Refresh Users</button>
-  @for (user of this.users(); track user.id) {
-    <app-user-info-item [user]="user"/>
+  <p>{{ message() }}</p>
+  <button (click)="get_users()">Refresh User List</button>
+  @for (user of this.users().sort((a, b) => (a.id < b.id ? -1 : 1)); track user.id) {
+    <app-user-info-item [user]="user" (userUpdate)="get_users()"/>
+  }
+  @if (showAddUser()) {
+    <div class="add-user-form">
+      <p>New User Info</p>
+      <input class="add-user-form-input" [(ngModel)]="newUserUsername" placeholder="Username" (keyup.enter)="submitNewUser()" />
+      <input class="add-user-form-input" [(ngModel)]="newUserName" placeholder="Display Name" (keyup.enter)="submitNewUser()" />
+      <input class="add-user-form-input" [(ngModel)]="newUserRole" placeholder="User Role" (keyup.enter)="submitNewUser()" />
+      <input class="add-user-form-input" [type]="show_password() ? 'text' : 'password'" [(ngModel)]="newUserPassword" placeholder="Password" (keyup.enter)="submitNewUser()" />
+      <input class="add-user-form-input" [type]="show_password() ? 'text' : 'password'" [(ngModel)]="newUserPasswordConf" placeholder="Confirm Password" (keyup.enter)="submitNewUser()" />
+      <div class="password-info">
+        @if (password_message() !== "") {<p>{{ password_message() }}</p>}
+        <button class="btn-primary" (mousedown)="show_password.set(true)" (mouseup)="show_password.set(false)">Show Password</button>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" (click)="submitNewUser()">Add</button>
+        <button class="btn-ghost" (click)="showAddUser.set(false)">Cancel</button>
+      </div>
+    </div>
+  } @else {
+    <button (click)="showAddUser.set(true)">+ Add User</button>
   }
 </div>
