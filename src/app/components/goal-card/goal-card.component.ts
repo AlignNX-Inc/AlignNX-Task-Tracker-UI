@@ -1,4 +1,6 @@
-import { Component, Input, Output, EventEmitter, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, signal, effect, ChangeDetectionStrategy } from '@angular/core';
+
+import { TaskService } from '../../services/task.service';
 
 import { FormsModule } from '@angular/forms';
 import { Goal } from '../../models/task.model';
@@ -20,11 +22,24 @@ export class GoalCardComponent {
   @Output() toggleTask = new EventEmitter<{task_id: string, parent_id: string}>();
   @Output() addTask = new EventEmitter<{ title: string; assignedTo: string, completeBy: string }>();
 
+  taskService = inject(TaskService);
+
   showAddTask = signal(false);
   invalidDateEntered = signal(false);
   newTaskTitle = '';
   newTaskAssignee = '';
   newTaskCompleteBy = '';
+
+  constructor () {
+    effect(() => {
+      if (this.showAddTask()) {
+        this.taskService.prevent_reload.set(true);
+      }
+      else {
+        this.taskService.prevent_reload.set(false);
+      }
+    })
+  }
 
   submitTask(): void {
     const title = this.newTaskTitle.trim();

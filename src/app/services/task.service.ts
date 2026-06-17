@@ -18,6 +18,7 @@ export class TaskService {
 
   // State for checking for changes to the goal/task database
   state_hash = signal<string>("");
+  prevent_reload = signal<boolean>(false);
 
   // ── UI state ──
   page = signal<string>("login");
@@ -120,6 +121,9 @@ export class TaskService {
 
   // ── Load all goals from the API ──
   loadGoals(): void {
+
+    if (this.prevent_reload()) {return;}
+
     this.loading.set(true);
     this.error.set(null);
     this.api.getGoals().subscribe({
