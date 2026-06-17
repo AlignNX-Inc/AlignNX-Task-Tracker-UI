@@ -1,10 +1,13 @@
 import { Component, Input, Output, EventEmitter, inject, signal, effect, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { TaskService } from '../../services/task.service';
 
 import { FormsModule } from '@angular/forms';
 import { Goal } from '../../models/task.model';
 import { TaskItemComponent } from '../task-item/task-item.component';
+
+import { ConfirmDeleteDialogComponent } from '../../dialogues/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-goal-card',
@@ -30,7 +33,7 @@ export class GoalCardComponent {
   newTaskAssignee = '';
   newTaskCompleteBy = '';
 
-  constructor () {
+  constructor (private dialog: MatDialog) {
     effect(() => {
       if (this.showAddTask()) {
         this.taskService.prevent_reload.set(true);
@@ -69,5 +72,15 @@ export class GoalCardComponent {
     this.newTaskAssignee = '';
     this.newTaskCompleteBy = '';
     this.showAddTask.set(false);
+  }
+
+  deleteGoal(): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {maxHeight: "fit-content"});
+
+    dialogRef.afterClosed().subscribe(doDelete => {
+      if (doDelete) {
+        this.taskService.deleteGoal(this.goal.id);
+      }
+    });
   }
 }

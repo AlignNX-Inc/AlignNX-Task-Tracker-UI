@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../../../services/api.service';
 import { UserMeta } from '../../../models/task.model';
 
-import { ConfirmDeleteDialogComponent } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { ConfirmDeleteDialogComponent } from '../../../dialogues/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-user-info-item',
