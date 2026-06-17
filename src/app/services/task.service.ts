@@ -221,6 +221,11 @@ export class TaskService {
     this.checkStateHash();
   }
 
+  deleteGoal(goalId: string): void {
+    this.api.deleteGoal(goalId).subscribe();
+    setTimeout(() => {this.loadGoals()}, 300)
+  }
+
   deleteTask(goalId: string, taskId: string): void {
     this.api.deleteTask(goalId, taskId).subscribe();
     setTimeout(() => {this.loadGoals()}, 300);

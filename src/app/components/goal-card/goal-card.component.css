@@ -95,6 +95,21 @@
 }
 .add-task-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+.delete-goal-btn {
+    margin-top: 10px;
+    background: none;
+    border: 1px dashed #ff4d4d;
+    color: #ff4d4d;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    width: 100%;
+}
+.delete-goal-btn:hover { border-color: #FF0000;  background: #FF0000; color: #FFFFFF; }
+
 .add-task-form {
     margin-top: 12px;
     display: flex;

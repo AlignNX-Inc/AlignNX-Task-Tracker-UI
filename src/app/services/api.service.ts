@@ -40,6 +40,10 @@ export class ApiService {
     return this.http.post<Goal>(`${API_BASE}/goals`, { title }, {withCredentials: true});
   }
 
+  deleteGoal(goalId: string): Observable<string> {
+    return this.http.delete<string>(`${API_BASE}/goals/${goalId}`, {withCredentials: true})
+  }
+
   createTask(goalId: string, title: string, assignedTo: string, completeBy: string): Observable<Task> {
     return this.http.post<Task>(`${API_BASE}/goals/${goalId}/tasks`, { title, assignedTo, completeBy }, {withCredentials: true});
   }
