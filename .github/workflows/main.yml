@@ -8,17 +8,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    
       - name: Checkout
         uses: actions/checkout@v6
+        
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '24.x'
+          
       - name: Install
         run: npm install
+        
       - name: Build
         run: npm run build
+        
       - name: Deploy
-        run: npm run deploy
-        env:
-          CI: true
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist/alignnx-task-tracker/browser  # Double check your exact local output path
+          branch: gh-pages
