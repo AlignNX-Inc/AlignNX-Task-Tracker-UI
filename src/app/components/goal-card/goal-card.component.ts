@@ -1,8 +1,13 @@
-import { Component, Input, Output, EventEmitter, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, signal, effect, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+import { TaskService } from '../../services/task.service';
 
 import { FormsModule } from '@angular/forms';
 import { Goal } from '../../models/task.model';
 import { TaskItemComponent } from '../task-item/task-item.component';
+
+import { ConfirmDeleteDialogComponent } from '../../dialogues/confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
   selector: 'app-goal-card',
@@ -20,11 +25,24 @@ export class GoalCardComponent {
   @Output() toggleTask = new EventEmitter<{task_id: string, parent_id: string}>();
   @Output() addTask = new EventEmitter<{ title: string; assignedTo: string, completeBy: string }>();
 
+  taskService = inject(TaskService);
+
   showAddTask = signal(false);
   invalidDateEntered = signal(false);
   newTaskTitle = '';
   newTaskAssignee = '';
   newTaskCompleteBy = '';
+
+  constructor (private dialog: MatDialog) {
+    effect(() => {
+      if (this.showAddTask()) {
+        this.taskService.prevent_reload.set(true);
+      }
+      else {
+        this.taskService.prevent_reload.set(false);
+      }
+    })
+  }
 
   submitTask(): void {
     const title = this.newTaskTitle.trim();
@@ -43,6 +61,10 @@ export class GoalCardComponent {
       this.invalidDateEntered.set(true);
       return;
     }
+    if (isNaN(new Date(completeBy).getDate()) && completeBy !== "") {
+      this.invalidDateEntered.set(true);
+      return;
+    }
     this.invalidDateEntered.set(false);
 
     this.addTask.emit({ title, assignedTo, completeBy });
@@ -50,5 +72,15 @@ export class GoalCardComponent {
     this.newTaskAssignee = '';
     this.newTaskCompleteBy = '';
     this.showAddTask.set(false);
+  }
+
+  deleteGoal(): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {maxHeight: "fit-content"});
+
+    dialogRef.afterClosed().subscribe(doDelete => {
+      if (doDelete) {
+        this.taskService.deleteGoal(this.goal.id);
+      }
+    });
   }
 }

@@ -18,6 +18,7 @@ export class TaskService {
 
   // State for checking for changes to the goal/task database
   state_hash = signal<string>("");
+  prevent_reload = signal<boolean>(false);
 
   // ── UI state ──
   page = signal<string>("login");
@@ -106,11 +107,15 @@ export class TaskService {
         if (hash !== this.state_hash()) {
           this.loadGoals();
         }
+        else {
+          this.loading.set(false);
+        }
         this.state_hash.set(hash);
+        this.error.set("");
       },
       error: err => {
         // In this case, error is most likely due to invalid credentials, so treat this as proof of server-initiated logout
-        this.error.set(err?.message ?? 'Failed to load state hash.');
+        this.loading.set(true);
         this.state_hash.set("");
         this.logged_in.set(false);
         this.page.set("login");
@@ -120,19 +125,23 @@ export class TaskService {
 
   // ── Load all goals from the API ──
   loadGoals(): void {
+
+    if (this.prevent_reload()) {return;}
+
     this.loading.set(true);
     this.error.set(null);
     this.api.getGoals().subscribe({
       next: goals => {
         // Preserve expanded state across reloads
         const prevExpanded = new Map(this.goals().map(g => [g.id, g.expanded]));
-        this.goals.set(
-          goals.map(g => ({ 
-            ...g, 
+        const temp_goals = (
+          goals.map(g => ({
+            ...g,
             tasks: [...g.tasks].map(t => {return {...t, parent: g};}),
             expanded: prevExpanded.get(g.id) ?? false
           }))
         );
+        this.goals.set(temp_goals)
         this.loading.set(false);
         this.logged_in.set(true);
         this.prev_logged_in.set(true);
@@ -178,7 +187,7 @@ export class TaskService {
         this.page.set("login");
       },
     });
-    this.checkStateHash();
+    //this.checkStateHash();
   }
 
   toggleGoalExpanded(goalId: string): void {
@@ -206,9 +215,20 @@ export class TaskService {
           )
         );
       },
-      error: (err) => {this.error.set(err?.message ?? 'Failed to create task.'); this.logged_in.set(false); this.page.set("login");},
+      error: (err) => {
+        this.error.set(err?.message ?? 'Failed to create task.');
+        if (err.status == 401) {
+          this.logged_in.set(false);
+          this.page.set("login");
+        }
+      },
     });
     this.checkStateHash();
+  }
+
+  deleteGoal(goalId: string): void {
+    this.api.deleteGoal(goalId).subscribe();
+    setTimeout(() => {this.loadGoals()}, 300)
   }
 
   deleteTask(goalId: string, taskId: string): void {

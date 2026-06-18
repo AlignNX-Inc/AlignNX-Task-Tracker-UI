@@ -33,10 +33,11 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "https://tasktracker.alignnx.com",
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "600kB",
                   "maximumError": "1MB"
                 },
                 {
@@ -99,6 +100,9 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
