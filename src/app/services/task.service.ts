@@ -108,6 +108,7 @@ export class TaskService {
           this.loadGoals();
         }
         this.state_hash.set(hash);
+        this.error.set("");
       },
       error: err => {
         // In this case, error is most likely due to invalid credentials, so treat this as proof of server-initiated logout
