@@ -73,6 +73,7 @@
           {{ taskService.sortedGoals().length }} goals ·
           {{ totalCompleted() }} of {{ totalTasks() }} tasks done
         </p>
+        <app-search-bar (searchChanged)="onSearchChanged($event)" />
       </div>
 
       <!-- ── New goal form ── -->
@@ -123,7 +124,7 @@
       <!-- ── Goal list ── -->
       @if (!taskService.loading() && !taskService.error()) {
         <div class="goal-list">
-          @for (goal of taskService.sortedGoals(); track goal.id) {
+          @for (goal of taskService.filteredGoals(); track goal.id) {
             <app-goal-card
               [goal]="goal"
               [progress]="taskService.getProgress(goal)"
