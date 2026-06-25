@@ -26,6 +26,7 @@ export class TaskService {
   error = signal<string | null>(null);
   filterMyTasks = signal(false);
   makeNewGoalPrivate = signal(false);
+  searchQuery = signal('');
 
   sortedTasks = computed(() => {
     const raw = this.goals();
@@ -79,6 +80,13 @@ export class TaskService {
       });
   });
 
+  filteredGoals = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+    if (!query) return this.sortedGoals();
+    return this.sortedGoals().filter(goal =>
+      goal.title.toLowerCase().includes(query)
+    );
+  });
 
   // Load session information from the server
   loadSession(): void {
@@ -119,7 +127,6 @@ export class TaskService {
         this.error.set("");
       },
       error: err => {
-        // In this case, error is most likely due to invalid credentials, so treat this as proof of server-initiated logout
         this.loading.set(true);
         this.state_hash.set("");
         this.logged_in.set(false);
@@ -192,7 +199,6 @@ export class TaskService {
         this.page.set("login");
       },
     });
-    //this.checkStateHash();
   }
 
   toggleGoalExpanded(goalId: string): void {
@@ -238,6 +244,11 @@ export class TaskService {
 
   deleteTask(goalId: string, taskId: string): void {
     this.api.deleteTask(goalId, taskId).subscribe();
+    setTimeout(() => {this.loadGoals()}, 300);
+  }
+
+  updateTask(goalId: string, taskId: string, title: string, assignedTo: string, completionDate: string, completed: boolean): void {
+    this.api.updateTask(goalId, taskId, title, assignedTo, completionDate, completed).subscribe();
     setTimeout(() => {this.loadGoals()}, 300);
   }
 

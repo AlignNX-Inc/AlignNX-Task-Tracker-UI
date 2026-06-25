@@ -78,4 +78,79 @@
     border: 2px solid #ff0000;
     color: #ffffff;
     background: #ff4b4b;
+} 
+
+.btn-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--accent-soft);
+    color: var(--text);
+    background: var(--bg);
+    border-radius: 4px;
+    text-align: center;
+    line-height: normal;
+    font-size: 19px;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 0;
+    padding-top: 1px;
 }
+
+.btn-edit:hover {
+    border: 2px solid var(--accent);
+    color: var(--bg);
+    background: var(--accent);
+}
+
+.edit-input {
+    flex: 6;
+    min-width: 0;
+    font-size: 14px;
+    color: var(--text);
+    font-family: var(--font-body);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 2px 6px;
+    outline: none;
+    background: var(--bg);
+    overflow: hidden;
+}
+
+.edit-date {
+    flex: 2;
+    min-width: 0;
+}
+
+.edit-assignee {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #4caf50;
+    color: #ffffff;
+    background: #4caf50;
+    border-radius: 4px;
+    text-align: center;
+    line-height: normal;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    padding: 0;
+    font-weight: 700;
+}
+
+.btn-save:hover {
+    border: 2px solid #388e3c;
+    background: #388e3c;
+    color: #ffffff;
+}
+

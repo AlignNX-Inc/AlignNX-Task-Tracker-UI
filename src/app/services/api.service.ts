@@ -36,6 +36,10 @@ export class ApiService {
     return this.http.patch<Task>(`${API_BASE}/goals/${goalId}/tasks/${taskId}`, { completed }, {withCredentials: true});
   }
 
+  updateTask(goalId: string, taskId: string, title: string, assignedTo: string, completionDate: string, completed: boolean): Observable<Task> {
+    return this.http.patch<Task>(`${API_BASE}/goals/${goalId}/tasks/${taskId}`, { title, assignedTo, completionDate, completed }, {withCredentials: true});
+  }
+
   createGoal(title: string, owner: string): Observable<Goal> {
     return this.http.post<Goal>(`${API_BASE}/goals`, { title, owner }, {withCredentials: true});
   }

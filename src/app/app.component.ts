@@ -9,11 +9,12 @@ import { ErrorDisplayComponent } from './components/error-display/error-display.
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { ManageUsersPageComponent } from './components/manage-users-page/manage-users-page.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, GoalCardComponent, ErrorDisplayComponent, TaskListComponent, LoginPageComponent, ManageUsersPageComponent],
+  imports: [FormsModule, HttpClientModule, GoalCardComponent, ErrorDisplayComponent, TaskListComponent, LoginPageComponent, ManageUsersPageComponent, SearchBarComponent],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./app.component.css'],
@@ -57,5 +58,9 @@ export class AppComponent implements OnInit {
     this.taskService.addGoal(title);
     this.newGoalTitle = '';
     this.showNewGoal.set(false);
+  }
+
+  onSearchChanged(query: string) {
+    this.taskService.searchQuery.set(query);
   }
 }
