@@ -247,6 +247,11 @@ export class TaskService {
     setTimeout(() => {this.loadGoals()}, 300);
   }
 
+  updateTask(goalId: string, taskId: string, title: string, assignedTo: string, completionDate: string, completed: boolean): void {
+    this.api.updateTask(goalId, taskId, title, assignedTo, completionDate, completed).subscribe();
+    setTimeout(() => {this.loadGoals()}, 300);
+  }
+
   getProgress(goal: Goal): number {
     if (!goal.tasks.length) return 0;
     return Math.round((goal.tasks.filter(t => t.completed).length / goal.tasks.length) * 100);

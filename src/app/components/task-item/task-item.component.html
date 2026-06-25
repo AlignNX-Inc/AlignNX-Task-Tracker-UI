@@ -1,12 +1,38 @@
 <div class="task-row" [class.completed]="task.completed">
     <button class="checkbox" (click)="emitData()" [attr.aria-label]="'Toggle ' + task.title">
-    <span class="check-icon">{{ task.completed ? '✓' : '' }}</span>
+        <span class="check-icon">{{ task.completed ? '✓' : '' }}</span>
     </button>
-    <span class="task-title">{{ task.title }}</span>
-    @if (task.completionDate !== '' && task.completionDate !== null) {
-        <span [style.background]="background_color()" [style.color]="text_color()" class="due-date">Due {{ task.completionDate }}</span>
-    }
-    <span class="assignee">{{ task.assignedTo }}</span>
 
+    @if (isEditing) {
+        <input
+            class="edit-input"
+            [(ngModel)]="editTitle"
+            (keyup.enter)="saveEdit()"
+        />
+        <input
+            class="edit-input edit-date"
+            [(ngModel)]="editDate"
+            placeholder="MM/DD/YYYY"
+            (keyup.enter)="saveEdit()"
+        />
+        <input
+            class="edit-input edit-assignee"
+            [(ngModel)]="editAssignee"
+            placeholder="Assignee"
+            (keyup.enter)="saveEdit()"
+        />
+    } @else {
+        <span class="task-title">{{ task.title }}</span>
+        @if (task.completionDate !== '' && task.completionDate !== null) {
+            <span [style.background]="background_color()" [style.color]="text_color()" class="due-date">Due {{ task.completionDate }}</span>
+        }
+        <span class="assignee">{{ task.assignedTo }}</span>
+    }
+
+    @if (isEditing) {
+        <button class="btn-save" (click)="saveEdit()">✓</button>
+    } @else {
+        <button class="btn-edit" (click)="startEdit()">✎</button>
+    }
     <button class="btn-delete" (click)="deleteTask()">✕</button>
 </div>

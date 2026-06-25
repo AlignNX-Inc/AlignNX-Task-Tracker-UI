@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, signal, inject, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 
 import { Task } from '../../models/task.model';
@@ -11,7 +12,7 @@ interface TaskInfo {
 @Component({
   selector: 'app-task-item',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './task-item.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./task-item.component.css'],
@@ -22,6 +23,11 @@ export class TaskItemComponent implements OnInit {
 
   taskService = inject(TaskService);
 
+  isEditing = false;
+  editTitle = '';
+  editDate = '';
+  editAssignee = '';
+
   emitData() {
     this.toggle.emit({task_id: this.task.id, parent_id: this.task.parent.id})
   }
@@ -30,7 +36,34 @@ export class TaskItemComponent implements OnInit {
     this.taskService.deleteTask(this.task.parent.id, this.task.id)
   }
 
+  startEdit() {
+    this.editTitle = this.task.title;
+    this.editDate = this.task.completionDate ?? '';
+    this.editAssignee = this.task.assignedTo;
+    this.isEditing = true;
+    this.taskService.prevent_reload.set(true);
+  }
 
+  saveEdit() {
+    if (this.editTitle.trim()) {
+        this.task = {
+            ...this.task,
+            title: this.editTitle.trim(),
+            assignedTo: this.editAssignee.trim(),
+            completionDate: this.editDate.trim(),
+        };
+        this.taskService.updateTask(
+            this.task.parent.id,
+            this.task.id,
+            this.editTitle.trim(),
+            this.editAssignee.trim(),
+            this.editDate.trim(),
+            this.task.completed
+        );
+    }
+    this.isEditing = false;
+    this.taskService.prevent_reload.set(false);
+  }
 
   background_color = signal<string>("");
   text_color = signal<string>("");
